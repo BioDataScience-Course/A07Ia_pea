@@ -11,16 +11,29 @@ editor: visual
 lang: fr
 ---
 
-<!--# Ce bloc-notes ne comporte exceptionnellement pas la structure classique (introduction, but, matériel et méthodes...) pour aller droit à l'essentiel. Il vous permet de vous familiariser avec les tests d'hypothèses du Chi^2 et leur interprétation, tout en vous libérant un maximum de temps pour commencer à travailler sur le projet de groupe. -->
+<!--# Ce bloc-notes ne comporte exceptionnellement pas la structure classique (introduction, but, matériel et méthodes...) pour aller droit à l'essentiel. Il vous permet de vous familiariser avec les tests d'hypothèses du Chi2 et leur interprétation, tout en vous libérant un maximum de temps pour commencer à travailler sur le projet de groupe. -->
 
 ```{r setup, include=FALSE}
 # Ceci est nécessaire pour les tests SDD, ne pas utiliser dans un "vrai" projet
 if (!"tools:tests" %in% search())
   source(here::here("tests/tools_tests.R"), attach(NULL, name = "tools:tests"))
 
+# Configure Knitr pour utiliser AGG comme périphérique graphique
+knitr::opts_chunk$set(dev = "ragg_png")
+
 # Configuration de l'environnement SciViews::R
 SciViews::R("infer", lang = "fr")
 ```
+
+<!--% Spécifier si vous avez employé l'intelligence artificielle dans votre projet. -->
+
+```{r ai_comment, output='asis'}
+select_answer(r"-{
+[] -   Ce document a été rédigé en étant assisté par l'Intelligence Artificielle.
+[] -   Ce document a été rédigé sans recours à l'Intelligence Artificielle.}-")
+```
+
+<!-- Précisez ci-dessous l'utilisation que vous avez faite de l'IA. Citez le modèle utilisé. -->
 
 # Génétique du pois
 
@@ -35,7 +48,7 @@ D'après les lois de Mendel, la génération F2 devrait respecter un ratio de 3 
 
 Le tableau suivant présente les résultats obtenus :
 
-<!--% Réalisez un tableau de contingence `pea_tab` qui reprend les observations de la génération F2. Utilisez `tabularise()` pour calculer les pourcentages, ainsi que le total. -->
+<!--% Réalisez un tableau de contingence `pea_tab` qui reprend les observations de la génération F2. Le vecteur employé dans as.table() doit être un vecteur nommé avec les éléments suivants `lisse` et `ridee`. Utilisez `tabularise()` pour calculer les pourcentages, ainsi que le total. -->
 
 ```{r peatab, warning=FALSE, record='RO', object='pea_tab'}
 # Tableau de contingence
@@ -46,7 +59,7 @@ tabularise(___)
 
 Nous réalisons un test $\chi^2$ univarié sur ces données.
 
-<!--% Complétez le chunk ci-dessous pour réaliser votre test d'hypothèse. -->
+<!--% Complétez le chunk ci-dessous pour réaliser votre test d'hypothèse. Les probabilités théoriques sont à fournir sous la forme d'un vecteur nommé avec les éléments suivants `lisse` et `ridee`. Ce vecteur doit comprendre les fractions attendues. -->
 
 ```{r peatabchi2, record='RN'}
 chisq.test(___, p = ___, rescale.p = ___)
@@ -71,7 +84,7 @@ select_answer(r"-{
 
 Nous recommençons notre expérience, cette fois avec un plus grand nombre de plants hybrides F1. En génération F2, nous observons maintenant les proportions suivantes : 2680 graines lisses et 849 graines ridées.
 
-<!--% Réalisez un second tableau de contingence `pea_tab2` qui reprend les observations de la génération F2 de la deuxième expérience. Utilisez `tabularise()` pour calculer les pourcentages, ainsi que le total -->
+<!--% Réalisez un second tableau de contingence `pea_tab2` qui reprend les observations de la génération F2 de la deuxième expérience. Le vecteur employé dans as.table() doit être un vecteur nommé avec les éléments suivants `lisse` et `ridee`. Utilisez `tabularise()` pour calculer les pourcentages, ainsi que le total -->
 
 ```{r peatab2, warning=FALSE, record='RO', object='pea_tab2'}
 # Tableau de contingence
@@ -82,7 +95,7 @@ ___
 
 Un test $\chi^2$ univarié est réalisé sur ces nouvelles données.
 
-<!--% Effectuez le test d'hypothèse pour vérifier une seconde fois. -->
+<!--% Effectuez le test d'hypothèse pour vérifier une seconde fois. Les probabilités théoriques sont à fournir sous la forme d'un vecteur nommé avec les éléments suivants `lisse` et `ridee`. Ce vecteur doit comprendre les fractions attendues. -->
 
 ```{r peatab2chi2, record='RN'}
 ___
@@ -109,9 +122,9 @@ select_answer(r"-{
 [] -   Notre seconde expérience est en désaccord avec les résultats de la première, mais comme le nombre d'observations y est plus important, nous nous fions à ce dernier résultat.}-")
 ```
 
-# Génétique du pois de senteur
+# Génétique de *Lathyrus odoratus* L., 1753
 
-Nous nous intéressons maintenant au croisement entre deux lignées pures du pois de senteur *Lathyrus odoratus* L., 1753. La première lignée a des fleurs pourpres et des grains de pollen longs et la seconde a des fleurs rouges et des grains de pollen ronds. En génération F1, l'ensemble des plants sont à fleurs pourpres et avec des grains de pollen longs. En génération F2, la loi de Mendel prédit que les ratios devraient être de 9:3:3:1 pour pourpre-long, pourpre-rond, rouge-long et rouge-court, respectivement, si les caractères pourpres et grain de pollen long sont dominants. Nous observons la distribution suivante de nos plantes F2 :
+Nous nous intéressons maintenant au croisement entre deux lignées pures du pois de senteur *Lathyrus odoratus*. La première lignée a des fleurs pourpres et des grains de pollen longs et la seconde a des fleurs rouges et des grains de pollen ronds. En génération F1, l'ensemble des plants sont à fleurs pourpres et avec des grains de pollen longs. En génération F2, la loi de Mendel prédit que les ratios devraient être de 9:3:3:1 pour pourpre-long, pourpre-rond, rouge-long et rouge-court, respectivement, si les caractères pourpres et grain de pollen long sont dominants. Nous observons la distribution suivante de nos plantes F2 :
 
 -   Fleurs pourpres et grains de pollen longs : 3125
 -   Fleurs pourpres et grains de pollen ronds : 254
@@ -127,7 +140,7 @@ Est-ce que ces observations respectent la loi de Mendel ?
 
 Le tableau de contingence suivant résume les résultats obtenus :
 
-<!--% Réalisez un tableau de contingence `pea_tab3` qui reprend les observations de la génération F2 de pois de senteur obtenues. Formatez-le ensuite avec `tabularise()`. -->
+<!--% Réalisez un tableau de contingence `pea_tab3` qui reprend les observations de la génération F2 de pois de senteur obtenues. Le vecteur employé dans as.table() doit être un vecteur nommé avec les éléments suivants `pourpre_long`,  `pourpre_rond`, `rouge_long`, `rouge_rond`. Formatez-le ensuite avec `tabularise()`. -->
 
 ```{r peatab3, warning=FALSE, record='RO', object='pea_tab3'}
 # Tableau de contingence
@@ -138,7 +151,7 @@ ___
 
 Nous effectuons un test $\chi^2$ univarié pour répondre à la question posée.
 
-<!--% Déterminez si la génétique mendélienne est respectée au seuil alpha de 5%. -->
+<!--% Déterminez si la génétique mendélienne est respectée au seuil alpha de 5%. Les probabilités théoriques sont à fournir sous la forme d'un vecteur nommé avec les éléments suivants `pourpre_long`,  `pourpre_rond`, `rouge_long`, `rouge_rond`. Ce vecteur doit comprendre les effectifs attendus. -->
 
 ```{r peatab3chi2, record='RN'}
 chisq.test(___, p = ___, rescale.p = TRUE)
@@ -151,10 +164,10 @@ select_answer(r"-{
 [] -   Nous rejetons H~0~ au seuil $\alpha$ de 5%.
 [] -   Nous ne rejetons pas H~0~ au seuil $\alpha$ de 5%.
 
-[] -   La génération F2 de pois de senteurs ne suit pas les ratios 9:3:3:1 ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
-[] -   La génération F2 de pois de senteurs ne suit pas les ratios 9:3:3:1 de manière significative au seuil $\alpha$ de 5% ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
-[] -   La génération F2 de pois de senteurs suit les ratios 9:3:3:1 ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
-[] -   La génération F2 de pois de senteurs suit les ratios 9:3:3:1 de manière significative au seuil $\alpha$ de 5%  ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
+[] -   La génération F2 de pois de senteur ne suit pas les ratios 9:3:3:1 ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
+[] -   La génération F2 de pois de senteur ne suit pas les ratios 9:3:3:1 de manière significative au seuil $\alpha$ de 5% ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
+[] -   La génération F2 de pois de senteur suit les ratios 9:3:3:1 ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
+[] -   La génération F2 de pois de senteur suit les ratios 9:3:3:1 de manière significative au seuil $\alpha$ de 5%  ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).
 [] -   Nous ne montrons pas de manière significative au seuil $\alpha$ de 5% que les ratios 9:3:3:1 ne sont pas suivis par la génération F2 de pois de senteur ($\chi^2_{obs}$ = 2176, ddl = 3, p < 0.001).}-")
 ```
 
@@ -174,8 +187,8 @@ Le tableau de contingence à double entrée ci-dessous résume les résultats ob
 ```{r peatab4, warning=FALSE, record='RO', object='pea_tab4'}
 # Tableau de contingence
 pea4 <- dtx(
-  couleur = ___,
-  pollen  = ___,
+  couleur = c("pourpre", "pourpre", "rouge", "rouge"),
+  pollen  = c("long", "rond", "long", "rond"),
   freq    = ___)
 pea_tab4 <- ___(data = ___, ___)
 tabularise(___)
@@ -204,5 +217,5 @@ select_answer(r"-{
 [] -   La couleur et la forme des grains de pollen sont des caractères indépendants chez le pois de senteur de manière significative au seuil $\alpha$ de 5% ($\chi^2_{obs}$ = 2183, ddl = 1, p < 0.001).
 [] -   La couleur et la forme des grains de pollen sont des caractères dépendants chez le pois de senteur ($\chi^2_{obs}$ = 2183, ddl = 1, p < 0.001).
 [] -   La couleur et la forme des grains de pollen sont des caractères dépendants chez le pois de senteur de manière significative au seuil $\alpha$ de 5%  ($\chi^2_{obs}$ = 2183, ddl = 1, p < 0.001).
-[] -   Nous ne montrons pas de manière significative au seuil $\alpha$ de 5% que la couleur et la forme des grains de pollen sont des caractère dépendants chez le pois de senteur ($\chi^2_{obs}$ = 2183, ddl = 1, p < 0.001).}-")
+[] -   Nous ne montrons pas de manière significative au seuil $\alpha$ de 5% que la couleur et la forme des grains de pollen sont des caractères dépendants chez le pois de senteur ($\chi^2_{obs}$ = 2183, ddl = 1, p < 0.001).}-")
 ```

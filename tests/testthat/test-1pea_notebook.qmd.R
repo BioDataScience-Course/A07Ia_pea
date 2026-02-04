@@ -21,7 +21,7 @@ test_that("Le bloc-notes est-il compilé en un fichier final HTML ?", {
 })
 
 test_that("La structure du document est-elle conservée ?", {
-  expect_true(all(c("Génétique du pois", "Génétique du pois de senteur",
+  expect_true(all(c("Génétique de *Pisum sativum* L., 1753", "Génétique de *Lathyrus odoratus* L., 1753",
     "Indépendance de la couleur et de la forme du grain de pollen")
     %in% (rmd_node_sections(pea_notebook) |> unlist() |> unique())))
   # Les sections (titres) attendues du bloc-notes ne sont pas toutes présentes
